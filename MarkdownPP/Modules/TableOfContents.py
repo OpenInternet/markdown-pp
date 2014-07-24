@@ -41,6 +41,7 @@ class TableOfContents(Module):
 
 		# iterate through the document looking for markers and headers
 		linenum = 0
+                lastline = None
 		for line in data:
 
 			# Fenced code blocks (Github-flavored markdown)
@@ -63,7 +64,7 @@ class TableOfContents(Module):
 
 			# hash headers
 			match = atxre.search(line)
-			if match and not infencedcodeblock:
+			if match and lastline and not infencedcodeblock:
 				depth = len(match.group(1))
 				title = match.group(2).strip()
 				headers[linenum] = (depth, title)
